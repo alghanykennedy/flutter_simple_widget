@@ -11,6 +11,13 @@ A Deep Dive learn about widget common use in Flutter.
 - flutter_svg: [link](https://pub.dev/packages/flutter_svg)
 - goole_fonts: [link](https://pub.dev/packages/google_fonts)
 
+## How to Run the App
+
+- Clone the repository
+- Ensure you have Flutter installed and set up
+- Run `flutter pub get` to fetch the project dependencies
+- Use `flutter run` to start the application
+
 ### Application structure
                     
 ```
@@ -26,5 +33,9 @@ A Deep Dive learn about widget common use in Flutter.
     ├── main.dart                   - Starting point of the application.
 ```
 
-#### Home Screen
+#### Home Pages
 ![image](https://github.com/alghanykennedy/flutter_simple_widget/assets/82708330/98e6efd0-08de-4bdd-924e-11a25b137aee)
+
+#### Detail Pages
+![image](https://github.com/alghanykennedy/flutter_simple_widget/assets/82708330/ca1e8abd-93ef-4ba7-8f56-b9771ee4f773)
+
