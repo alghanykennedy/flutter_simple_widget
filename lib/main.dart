@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_widget/pages/detail_pages.dart';
 import 'package:flutter_simple_widget/pages/home_pages.dart';
 
 void main() {
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       home: HomePage(),
+      routes: <String, WidgetBuilder>{
+        '/detail_page': (BuildContext context) => const DetailPage(),
+      },
     );
   }
 }

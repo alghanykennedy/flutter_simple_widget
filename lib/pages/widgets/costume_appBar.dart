@@ -3,18 +3,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-AppBar appBar() {
+AppBar appBar(BuildContext context, {String? title, Color? backgroundColor}) {
   return AppBar(
-    title: const Text(
-      'Breakfast',
-      style: TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-    ),
-    backgroundColor: Colors.white,
+    title: title != null
+        ? Text(
+            title,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          )
+        : null,
+    backgroundColor: backgroundColor ?? Colors.white,
     elevation: 0,
     centerTitle: true,
     leading: GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pop(context);
+      },
       child: Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.all(10),

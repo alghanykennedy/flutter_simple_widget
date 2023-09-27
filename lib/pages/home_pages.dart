@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_widget/models/category_model.dart';
 import 'package:flutter_simple_widget/models/diet_model.dart';
 import 'package:flutter_simple_widget/models/popular_model.dart';
+import 'package:flutter_simple_widget/pages/detail_pages.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'widgets/costume_appBar.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _getInitialInfo();
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context, title: 'Breakfast'),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          _dietsSection(),
+          _dietsSection(context),
           const SizedBox(
             height: 40,
           ),
@@ -139,7 +140,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Column _dietsSection() {
+  Column _dietsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -154,80 +155,87 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        SizedBox(
-          height: 240,
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              return Container(
-                width: 210,
-                decoration: BoxDecoration(
-                  color: diets[index].boxColor.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SvgPicture.asset(diets[index].iconPath),
-                    Column(
-                      children: [
-                        Text(
-                          diets[index].name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 16,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const DetailPage();
+            }));
+          },
+          child: SizedBox(
+            height: 240,
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 210,
+                  decoration: BoxDecoration(
+                    color: diets[index].boxColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SvgPicture.asset(diets[index].iconPath),
+                      Column(
+                        children: [
+                          Text(
+                            diets[index].name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${diets[index].level} | ${diets[index].duration} | ${diets[index].calorie}',
-                          style: const TextStyle(
-                            color: Color(0xff7B6F72),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
+                          Text(
+                            '${diets[index].level} | ${diets[index].duration} | ${diets[index].calorie}',
+                            style: const TextStyle(
+                              color: Color(0xff7B6F72),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 45,
-                      width: 130,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              diets[index].viewIsSelected
-                                  ? const Color(0xff9DCEFF)
-                                  : Colors.transparent,
-                              diets[index].viewIsSelected
-                                  ? const Color(0xff92A3FD)
-                                  : Colors.transparent,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Center(
-                        child: Text(
-                          'View',
-                          style: TextStyle(
-                            color: diets[index].viewIsSelected
-                                ? Colors.white
-                                : const Color(0xffC58BF2),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
+                        ],
+                      ),
+                      Container(
+                        height: 45,
+                        width: 130,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                diets[index].viewIsSelected
+                                    ? const Color(0xff9DCEFF)
+                                    : Colors.transparent,
+                                diets[index].viewIsSelected
+                                    ? const Color(0xff92A3FD)
+                                    : Colors.transparent,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                          child: Text(
+                            'View',
+                            style: TextStyle(
+                              color: diets[index].viewIsSelected
+                                  ? Colors.white
+                                  : const Color(0xffC58BF2),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(
-              width: 25,
-            ),
-            itemCount: diets.length,
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(
+                width: 25,
+              ),
+              itemCount: diets.length,
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
             ),
           ),
         )
@@ -256,48 +264,49 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 120,
           child: ListView.separated(
-              itemCount: categories.length,
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              separatorBuilder: (context, index) => const SizedBox(
-                    width: 25,
-                  ),
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: categories[index].boxColor.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(categories[index].iconPath),
-                        ),
+            itemCount: categories.length,
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            separatorBuilder: (context, index) => const SizedBox(
+              width: 25,
+            ),
+            itemBuilder: (context, index) {
+              return Container(
+                width: 100,
+                decoration: BoxDecoration(
+                    color: categories[index].boxColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                       ),
-                      Text(
-                        categories[index].name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 14,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              }),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset(categories[index].iconPath),
+                      ),
+                    ),
+                    Text(
+                      categories[index].name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
