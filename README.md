@@ -38,4 +38,3 @@ A Deep Dive learn about widget common use in Flutter.
 
 #### Detail Pages
 ![image](https://github.com/alghanykennedy/flutter_simple_widget/assets/82708330/ca1e8abd-93ef-4ba7-8f56-b9771ee4f773)
-
